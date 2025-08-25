@@ -107,6 +107,14 @@ def logout():
     flash('Has cerrado sesión', 'info')
     return redirect(url_for('index'))
 
+@app.route('/profile')
+def profile():
+    if not is_logged_in():
+        flash("Inicia sesión para acceder al perfil.", "warning")
+        return redirect(url_for('login'))
+    return render_template('profile.html')
+
+
 def api_request(endpoint, method='GET', params=None, json=None, headers=None):
     url = API_URL + endpoint
     headers = headers or {}
