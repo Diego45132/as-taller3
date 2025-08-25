@@ -6,8 +6,26 @@
 <div class="row">
     <div class="col-12">
         <h1>Bienvenido a la Tienda Virtual</h1>
-        <!-- TODO: Mostrar productos destacados -->
-        <!-- TODO: Agregar carousel o grid de productos -->
+
+        <!-- Productos destacados -->
+        <h2 class="mt-4 mb-3">Productos Destacados</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in featured_products %}
+            <div class="col">
+                <div class="card h-100 product-card">
+                    <img src="{{ product.image_url or url_for('static', filename='img/default-product.png') }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text text-truncate">{{ product.description }}</p>
+                        <p class="card-text fw-bold text-success">${{ "%.2f"|format(product.price) }}</p>
+                        <a href="{{ url_for('products.detail', product_id=product.id) }}" class="btn btn-primary mt-auto">Ver producto</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <p>No hay productos destacados disponibles.</p>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
