@@ -1,26 +1,26 @@
-// Inicializar componentes cuando cargue la página
-document.addEventListener('DOMContentLoaded', function() {
+// Esperar a que el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', () => {
     console.log("Página cargada, lista para interacción.");
-    // Aquí podrías cargar el carrito o productos si quieres
+    // Aquí podrías inicializar alguna función, como cargar dinámicamente el carrito
 });
 
-// Función para agregar productos al carrito con AJAX
+// Agregar producto al carrito usando AJAX
 function addToCart(productId) {
-    fetch('/api/v1/carts/items', {
+    fetch('/add-to-cart/' + productId, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify({ product_id: productId, quantity: 1 })
+        body: 'quantity=1' // ajustable si tienes un input de cantidad
     })
     .then(response => {
         if (!response.ok) throw new Error('Error al agregar al carrito');
-        return response.json();
+        return response.text();
     })
-    .then(data => {
+    .then(() => {
         alert('Producto agregado al carrito');
-        // Aquí puedes actualizar el UI, por ejemplo recargar carrito
-        console.log('Agregado:', data);
+        // Aquí podrías actualizar dinámicamente el número del carrito, por ejemplo
     })
     .catch(error => {
         console.error(error);
@@ -28,12 +28,13 @@ function addToCart(productId) {
     });
 }
 
-// Función para actualizar cantidad en el carrito
+// Actualizar cantidad de un ítem del carrito
 function updateCartQuantity(itemId, quantity) {
     fetch(`/api/v1/carts/items/${itemId}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
         },
         body: JSON.stringify({ quantity: quantity })
     })
@@ -43,8 +44,8 @@ function updateCartQuantity(itemId, quantity) {
     })
     .then(data => {
         alert('Cantidad actualizada');
-        // Aquí puedes refrescar la vista del carrito
         console.log('Actualizado:', data);
+        // Podrías recargar solo la sección del carrito si usas componentes dinámicos
     })
     .catch(error => {
         console.error(error);
@@ -52,16 +53,22 @@ function updateCartQuantity(itemId, quantity) {
     });
 }
 
-// Función para remover items del carrito
+// Eliminar ítem del carrito
 function removeFromCart(itemId) {
     fetch(`/api/v1/carts/items/${itemId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     })
     .then(response => {
         if (!response.ok) throw new Error('Error al eliminar el ítem');
         alert('Ítem eliminado del carrito');
-        // Aquí refresca el UI para quitar el item eliminado
-        console.log('Eliminado itemId:', itemId);
+        // Eliminar visualmente el item del DOM (si tienes un id específico en el HTML)
+        const itemElement = document.getElementById(`cart-item-${itemId}`);
+        if (itemElement) {
+            itemElement.remove();
+        }
     })
     .catch(error => {
         console.error(error);
