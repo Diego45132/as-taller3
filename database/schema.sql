@@ -47,13 +47,16 @@ CREATE INDEX idx_carts_user_id ON carts(user_id);
 
 -- Usuarios
 INSERT INTO users (username, email, password_hash) VALUES
+('mario104', 'mar@example.com', 'hashed_pw_mario'),
 ('juan123', 'juan@example.com', 'hashed_pw_juan'),
+('carlos387', 'kar7@example.com', 'hashed_pw_juan'),
 ('maria456', 'maria@example.com', 'hashed_pw_maria');
 
 -- Productos
 INSERT INTO products (name, description, price, stock, image_url) VALUES
 ('Camiseta', 'Camiseta de algodón 100% orgánico', 19.99, 50, 'https://example.com/img/camiseta.jpg'),
 ('Pantalón', 'Pantalón vaquero azul oscuro', 39.99, 30, 'https://example.com/img/pantalon.jpg'),
+('camiseta', 'sudadera lana verde oscuro', 29.99, 40, 'https://example.com/img/camiseta.jpg'),
 ('Zapatillas', 'Zapatillas deportivas unisex', 59.99, 20, 'https://example.com/img/zapatillas.jpg');
 
 -- Carritos
@@ -65,3 +68,4 @@ INSERT INTO cart_items (cart_id, product_id, quantity) VALUES
 (1, 1, 2),  -- Juan compra 2 camisetas
 (1, 3, 1),  -- Juan compra 1 par de zapatillas
 (2, 2, 1);  -- Maria compra 1 pantalón
+(1, 2, 1);  -- Mario compra 1 sudadera

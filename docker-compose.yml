@@ -1,7 +1,7 @@
 services:
 
   database:
-    image: postgres:15
+    build: ./database
     environment:
       POSTGRES_DB: tienda_db
       POSTGRES_USER: tienda_user

@@ -1,4 +1,3 @@
-# Proxy
 FROM nginx:alpine
 
 # Copiar configuración personalizada
