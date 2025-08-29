@@ -8,7 +8,7 @@ main = Blueprint('main', __name__)
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'clave-por-defecto-cambiar')
 
-API_URL = os.getenv('API_URL', 'http://localhost:8000')  # Cambié el valor por defecto a localhost por razones de seguridad
+API_URL = os.getenv('API_URL', 'http://backend:8000')  # Cambié el valor por defecto a localhost por razones de seguridad
 
 # Rutas dentro del Blueprint 'main'
 
@@ -148,5 +148,10 @@ def is_logged_in():
 # Registrar el Blueprint con un prefijo de URL
 app.register_blueprint(main, url_prefix='/')
 
+@app.context_processor
+def inject_is_logged_in():
+    return dict(is_logged_in=is_logged_in)
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)

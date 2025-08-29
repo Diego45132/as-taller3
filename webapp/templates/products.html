@@ -7,7 +7,6 @@
     <div class="col-12">
         <h1>Nuestros Productos</h1>
 
-        <!-- Formulario de búsqueda -->
         <form method="GET" class="d-flex mb-3" action="{{ url_for('main.products') }}">
             <input 
                 class="form-control me-2" 
@@ -18,25 +17,6 @@
                 value="{{ search_query or '' }}">
             <button class="btn btn-outline-primary" type="submit">Buscar</button>
         </form>
-
-        <!-- Grid de productos -->
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-            {% for product in products %}
-            <div class="col">
-                <div class="card h-100 product-card">
-                    <img src="{{ product.image_url or url_for('static', filename='img/default-product.png') }}" class="card-img-top" alt="{{ product.name }}">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text text-truncate">{{ product.description }}</p>
-                        <p class="card-text fw-bold text-success">${{ "%.2f"|format(product.price) }}</p>
-                        <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="btn btn-primary mt-auto">Ver producto</a>
-                    </div>
-                </div>
-            </div>
-            {% else %}
-                <p>No se encontraron productos.</p>
-            {% endfor %}
-        </div>
     </div>
 </div>
 {% endblock %}
