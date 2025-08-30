@@ -1,22 +1,18 @@
-# API
+# backend/Dockerfile
+
 FROM python:3.11-slim
 
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copiar e instalar dependencias de Python
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copiar código de la aplicación
+# Copia los archivos
 COPY . .
 
-# Exponer el puerto
+# Instala las dependencias
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expone el puerto en el que corre la app
 EXPOSE 8000
 
-# Comando para ejecutar la aplicación
+# Comando para iniciar el servidor
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

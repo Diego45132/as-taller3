@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
 
   database:
@@ -16,8 +18,10 @@ services:
       timeout: 5s
       retries: 5
 
-  api:
+  api:  # Este reemplaza 'api'
     build: ./api
+    ports:
+      - "8000:8000"
     environment:
       DATABASE_URL: postgresql://tienda_user:tienda_password@database:5432/tienda_db
     depends_on:
@@ -28,8 +32,10 @@ services:
 
   webapp:
     build: ./webapp
+    ports:
+      - "5000:5000"
     environment:
-      API_URL: http://api:8000
+      API_URL: http://api:8000  # Aquí el webapp se conecta al api
     depends_on:
       - api
     networks:

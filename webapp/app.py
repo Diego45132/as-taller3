@@ -8,7 +8,7 @@ main = Blueprint('main', __name__)
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'clave-por-defecto-cambiar')
 
-API_URL = os.getenv('API_URL', 'http://backend:8000')  # Cambié el valor por defecto a localhost por razones de seguridad
+API_URL = os.getenv('API_URL', 'http://api:5000')  # Cambié el valor por defecto a localhost por razones de seguridad
 
 # Rutas dentro del Blueprint 'main'
 

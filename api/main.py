@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import users, products, carts
+from routes import users, products, carts
 
 # ✅ Crear la instancia de FastAPI
 app = FastAPI(
