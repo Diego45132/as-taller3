@@ -11,6 +11,8 @@ app = FastAPI(
     description="API para una tienda en línea con gestión de usuarios, productos y carrito de compras."
 )
 
+app.include_router(products.router)
+
 # ✅ Configurar CORS
 origins = [
     "http://localhost",

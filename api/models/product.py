@@ -1,6 +1,9 @@
 from sqlalchemy import Column, Integer, String, Numeric, DateTime
 from sqlalchemy.sql import func
-from api.database import Base
+from database import Base
+from pydantic import BaseModel
+from typing import Optional
+
 
 class Product(Base):
     __tablename__ = "products"
@@ -15,3 +18,29 @@ class Product(Base):
 
     def __repr__(self):
         return f"<Product(id={self.id}, name='{self.name}', price={self.price}, stock={self.stock})>"
+
+
+
+class ProductCreate(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    in_stock: bool = True
+
+
+class ProductUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[float] = None
+    in_stock: Optional[bool] = None
+
+
+class ProductOut(BaseModel):
+    id: int
+    name: str
+    description: Optional[str] = None
+    price: float
+    in_stock: bool
+
+    class Config:
+        orm_mode = True

@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.sql import func
-from api.database import Base
+from database import Base
+from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 class User(Base):
     __tablename__ = "users"
@@ -14,3 +16,32 @@ class User(Base):
 
     def __repr__(self):
         return f"<User(id={self.id}, username='{self.username}', email='{self.email}', is_active={self.is_active})>"
+
+
+
+
+# Modelo para crear un nuevo usuario
+class UserCreate(BaseModel):
+    username: str
+    email: EmailStr
+    password: str
+
+# Modelo para login de usuario
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+# Modelo para la salida de datos del usuario (sin mostrar contraseña)
+class UserOut(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+
+    class Config:
+        orm_mode = True
+
+# Modelo para actualizar datos del usuario (opcional)
+class UserUpdate(BaseModel):
+    username: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None

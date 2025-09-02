@@ -13,12 +13,12 @@
             {% for product in featured_products %}
             <div class="col">
                 <div class="card h-100 product-card">
-                    <img src="{{ product.image_url or url_for('static', filename='img/default-product.png') }}" class="card-img-top" alt="{{ product.name }}">
+                    <img src="{{ product.image_url or url_for('static', filename='img/default-product.png') }}" class="card-img-top" alt="{{ product['nombre'] }}">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text text-truncate">{{ product.description }}</p>
-                        <p class="card-text fw-bold text-success">${{ "%.2f"|format(product.price) }}</p>
-                        <a href="{{ url_for('products.detail', product_id=product.id) }}" class="btn btn-primary mt-auto">Ver producto</a>
+                        <h5 class="card-title">{{ product['nombre'] }}</h5>
+                        <p class="card-text text-truncate">{{ product['descripcion'] }}</p>
+                        <p class="card-text fw-bold text-success">${{ "%.2f"|format(product['precio']) }}</p>
+                        <a href="{{ url_for('products.detail', product_id=product['id']) }}" class="btn btn-primary mt-auto">Ver producto</a>
                     </div>
                 </div>
             </div>

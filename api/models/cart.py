@@ -1,7 +1,11 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from api.database import Base
+from database import Base  
+from pydantic import BaseModel
+from typing import Optional
+
+
 
 class Cart(Base):
     __tablename__ = "carts"
@@ -28,3 +32,23 @@ class CartItem(Base):
     # Relaciones
     cart = relationship("Cart", back_populates="items")
     product = relationship("Product", back_populates="cart_items")
+
+
+class CartItemCreate(BaseModel):
+    product_id: int
+    quantity: int
+    user_id: Optional[int] = None 
+
+
+class CartItemUpdate(BaseModel):
+    quantity: Optional[int] = None  
+
+class CartItemOut(BaseModel):
+    id: int
+    product_id: int
+    quantity: int
+    user_id: Optional[int] = None
+
+    class Config:
+        orm_mode = True
+

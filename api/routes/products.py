@@ -1,16 +1,26 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from api.database import get_db
-from api.models.product import Product
-from api.schemas.product import ProductCreate, ProductUpdate, ProductOut
+from database import get_db
+from models.product import Product, ProductCreate, ProductUpdate, ProductOut
 from typing import List
+
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/products",
+    tags=["products"]
+)
 
-@router.get("/", response_model=List[ProductOut])
+@router.get("/featured")
+async def get_featured_products():
+    return [
+        {"id": 1, "nombre": "Camiseta", "descripcion": "Muy cómoda", "precio": 19.99, "image_url": None},
+        {"id": 2, "nombre": "Pantalón", "descripcion": "Jeans clásicos", "precio": 39.99, "image_url": None},
+    ]
+
+@router.get("products/featured", response_model=List[ProductOut])
 async def get_products(db: Session = Depends(get_db)):
     products = db.query(Product).all()
     return products
