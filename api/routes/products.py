@@ -7,6 +7,12 @@ from fastapi import Request
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
+# Nueva ruta GET para obtener todos los productos (compatible con frontend)
+@router.get("/", response_model=List[ProductOut])
+async def get_all_products(db: Session = Depends(get_db)):
+    products = db.query(Product).all()
+    return products
+
 
 @router.get("/destacados")
 async def productos_destacados(db: Session = Depends(get_db)):

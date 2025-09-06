@@ -30,7 +30,7 @@ def products():
     search_query = request.args.get('q', '')
     params = {'q': search_query} if search_query else {}
     try:
-        resp = api_request('/products', params=params)
+        resp = api_request('/products', method='GET', params=params)
         products = resp.json()
     except Exception as e:
         products = []
