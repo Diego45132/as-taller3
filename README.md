@@ -1,5 +1,5 @@
 # Taller: Aplicación Web Multi-Capa con Contenedores
-
+diego 
 ## Descripción del Proyecto
 
 Este taller te guiará en la construcción de una tienda virtual utilizando arquitectura multi-capa con contenedores Docker. El proyecto incluye:
