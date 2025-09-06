@@ -10,7 +10,7 @@
         <!-- Productos destacados -->
         <h2 class="mt-4 mb-3">Productos Destacados</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for product in featured_products %}
+            {% for product in productos_destacados %}
             <div class="col">
                 <div class="card h-100 product-card">
                     <img src="{{ product.image_url or url_for('static', filename='img/default-product.png') }}" class="card-img-top" alt="{{ product['nombre'] }}">
@@ -18,7 +18,7 @@
                         <h5 class="card-title">{{ product['nombre'] }}</h5>
                         <p class="card-text text-truncate">{{ product['descripcion'] }}</p>
                         <p class="card-text fw-bold text-success">${{ "%.2f"|format(product['precio']) }}</p>
-                        <a href="{{ url_for('products.detail', product_id=product['id']) }}" class="btn btn-primary mt-auto">Ver producto</a>
+                        <a href="/" class="btn btn-primary mt-auto">Ver producto</a>
                     </div>
                 </div>
             </div>

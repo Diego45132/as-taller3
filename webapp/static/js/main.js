@@ -30,7 +30,7 @@ function addToCart(productId) {
 
 // Actualizar cantidad de un ítem del carrito
 function updateCartQuantity(itemId, quantity) {
-    fetch(`/api/v1/carts/items/${itemId}`, {
+    fetch(`/carts/items/${itemId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ function updateCartQuantity(itemId, quantity) {
 
 // Eliminar ítem del carrito
 function removeFromCart(itemId) {
-    fetch(`/api/v1/carts/items/${itemId}`, {
+    fetch(`/carts/items/${itemId}`, {
         method: 'DELETE',
         headers: {
             'X-Requested-With': 'XMLHttpRequest'

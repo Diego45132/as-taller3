@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, String, Numeric, DateTime
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from database import Base
 from pydantic import BaseModel
 from typing import Optional
+from datetime import datetime
 
 
 class Product(Base):
@@ -16,6 +18,9 @@ class Product(Base):
     image_url = Column(String(255), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
+    # Relaciones
+    cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
+
     def __repr__(self):
         return f"<Product(id={self.id}, name='{self.name}', price={self.price}, stock={self.stock})>"
 
@@ -25,14 +30,14 @@ class ProductCreate(BaseModel):
     name: str
     description: Optional[str] = None
     price: float
-    in_stock: bool = True
+    stock: int = 0
 
 
 class ProductUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     price: Optional[float] = None
-    in_stock: Optional[bool] = None
+    stock: Optional[int] = None
 
 
 class ProductOut(BaseModel):
@@ -40,7 +45,21 @@ class ProductOut(BaseModel):
     name: str
     description: Optional[str] = None
     price: float
-    in_stock: bool
+    stock: int
+    image_url: Optional[str] = None
+    created_at: Optional[datetime] = None
 
     class Config:
         orm_mode = True
+        
+class ProductoSchema(BaseModel):
+    id: int
+    nombre: str
+    descripcion: str
+    precio: float
+    image_url: Optional[str]
+
+    model_config = {
+        "from_attributes": True
+    }
+        

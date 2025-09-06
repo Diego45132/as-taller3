@@ -401,9 +401,9 @@ app.add_middleware(
 )
 
 # TODO: Incluir los routers
-# app.include_router(users.router, prefix="/api/v1/users", tags=["users"])
-# app.include_router(products.router, prefix="/api/v1/products", tags=["products"])
-# app.include_router(carts.router, prefix="/api/v1/carts", tags=["carts"])
+# app.include_router(users.router, prefix="/users", tags=["users"])
+# app.include_router(products.router, prefix="/products", tags=["products"])
+# app.include_router(carts.router, prefix="/carts", tags=["carts"])
 
 @app.get("/")
 async def root():

@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import users, products, carts
+from database import engine, Base
+from models import user, product, cart
 
 # ✅ Crear la instancia de FastAPI
 app = FastAPI(
@@ -11,7 +13,11 @@ app = FastAPI(
     description="API para una tienda en línea con gestión de usuarios, productos y carrito de compras."
 )
 
-app.include_router(products.router)
+# ✅ Crear las tablas de la base de datos
+Base.metadata.create_all(bind=engine)
+
+app.include_router(products.router, prefix="/api/v1", tags=["products"])
+
 
 # ✅ Configurar CORS
 origins = [
@@ -30,9 +36,9 @@ app.add_middleware(
 )
 
 # ✅ Incluir los routers
-app.include_router(users.router, prefix="/api/v1/users", tags=["users"])
-app.include_router(products.router, prefix="/api/v1/products", tags=["products"])
-app.include_router(carts.router, prefix="/api/v1/carts", tags=["carts"])
+app.include_router(users.router, prefix="/users", tags=["users"])
+app.include_router(products.router, prefix="/products", tags=["products"])
+app.include_router(carts.router, prefix="/carts", tags=["carts"])
 
 # ✅ Endpoint raíz de prueba
 @app.get("/")
@@ -43,3 +49,11 @@ async def root():
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
+
+@app.get("/productos/destacados")
+def productos_destacados():
+    productos = [
+        {"id": 1, "nombre": "Producto 1", "destacado": True},
+        {"id": 2, "nombre": "Producto 2", "destacado": True}
+    ]
+    return {"productos": productos}

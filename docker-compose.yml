@@ -1,9 +1,9 @@
-version: "3.9"
-
 services:
 
   database:
     build: ./database
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: tienda_db
       POSTGRES_USER: tienda_user
@@ -35,7 +35,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      API_URL: http://api:8000  # Aquí el webapp se conecta al api
+      API_URL: http://172.25.14.150:8000/api/v1  # Aquí el webapp se conecta al api
     depends_on:
       - api
     networks:

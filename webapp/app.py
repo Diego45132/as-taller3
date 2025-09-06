@@ -8,20 +8,22 @@ main = Blueprint('main', __name__)
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'clave-por-defecto-cambiar')
 
-API_URL = os.getenv('API_URL', 'http://api:5000')  # Cambié el valor por defecto a localhost por razones de seguridad
+API_URL = os.getenv('API_URL', 'http://localhost:8000/api/v1') # Cambié el valor por defecto a localhost por razones de seguridad
 
 # Rutas dentro del Blueprint 'main'
+
 
 @main.route('/')
 def index():
     # Obtener productos destacados de la API
     try:
-        resp = api_request('/products/featured')
-        featured_products = resp.json()
+        resp = api_request('/products/destacados')
+        productos_destacados = resp.json()
     except Exception as e:
-        featured_products = []
+        productos_destacados= []
         flash(f'No se pudieron cargar los productos destacados: {str(e)}', 'warning')
-    return render_template('index.html', featured_products=featured_products)
+        
+    return render_template('index.html', productos_destacados=productos_destacados)
 
 @main.route('/products')
 def products():
@@ -33,6 +35,7 @@ def products():
     except Exception as e:
         products = []
         flash(f'No se pudieron cargar los productos: {str(e)}', 'warning')
+        
     return render_template('products.html', products=products, search_query=search_query)
 
 @main.route('/login', methods=['GET', 'POST'])
